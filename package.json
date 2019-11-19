@@ -1,0 +1,18 @@
+{
+  "name": "demux-eos-sample",
+  "version": "1.0.0",
+  "description": "Sample of using demux-js with EOS blockchain.",
+  "main": "index.js",
+  "repository": "git@github.com:tiendq/demux-eos-sample.git",
+  "author": "Tien Do <tiendq@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "DEBUG=app node index.js"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "demux": "^4.0.0",
+    "demux-eos": "^4.0.1",
+    "express": "^4.17.1"
+  }
+}
