@@ -7,7 +7,7 @@
   "author": "Tien Do <tiendq@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "DEBUG=app node index.js"
+    "start": "DEBUG=app,OAH,v1 node index.js"
   },
   "dependencies": {
     "debug": "^4.1.1",
