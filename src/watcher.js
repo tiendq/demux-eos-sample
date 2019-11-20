@@ -18,20 +18,19 @@ const actionHandler = new ObjectActionHandler([handler]);
  * https://github.com/EOSIO/demux-js-eos
  */
 const actionReader = new NodeosActionReader({
-  startAtBlock: 50000000,
+  startAtBlock: -1,
   onlyIrreversible: true,
   nodeosEndpoint: 'http://jungle2.cryptolions.io:80'
 });
 
 /*
  * This ready-to-use base class helps coordinate the Action Reader and Action Handler, passing through block information
- * from the Reader to the Handler. The third argument is the polling loop interval in milliseconds. Since EOS has 0.5 second
- * block times, we set this to half that for an average of 125ms latency.
+ * from the Reader to the Handler. The third argument is the polling loop interval in milliseconds.
  */
 const actionWatcher = new BaseActionWatcher(
   actionReader,
   actionHandler,
-  250
+  500
 );
 
 async function startWatcher() {

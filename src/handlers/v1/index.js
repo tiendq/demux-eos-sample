@@ -1,3 +1,15 @@
+const debug = require('debug')('v1');
+
+function updateTransferData(state, payload, blockInfo, context) {
+  debug('=== updateTransferData ===\npayload: %O\nblockInfo: %O', payload, blockInfo);
+  context.stateCopy = JSON.parse(JSON.stringify(state));
+}
+
+function logUpdate(payload, blockInfo, context) {
+  debug('=== logUpdate ===');
+  // debug('Copied state in context:\n %o', context.stateCopy);
+}
+
 /* Updaters
  * When the Action Handler receives new blocks, for each action in that block, we loop over all updaters and check if
  * the actionType matches. If it does, we run the corresponding updater's `apply` function. The order of the updaters
@@ -27,35 +39,10 @@
  * provided `state` object. Refer to the ObjectActionHandler implementation for `state`:
  * https://github.com/EOSIO/demux-js/blob/develop/examples/eos-transfers/ObjectActionHandler.js
 */
-
-const debug = require('debug')('V1');
-
-function parseTokenString(tokenString) {
-  const [amountString, symbol] = tokenString.split(" ")
-  const amount = parseFloat(amountString)
-  return { amount, symbol }
-}
-
-function updateTransferData(state, payload, blockInfo, context) {
-  debug('updateTransferData\nstate: %O\n, payload: %O\n, blockInfo: %O', state, payload, blockInfo);
-
-  const { amount, symbol } = parseTokenString(payload.data.quantity)
-  if (!state.volumeBySymbol[symbol]) {
-    state.volumeBySymbol[symbol] = amount
-  } else {
-    state.volumeBySymbol[symbol] += amount
-  }
-  state.totalTransfers += 1
-  context.stateCopy = JSON.parse(JSON.stringify(state)) // Deep copy state to de-reference
-}
-
-const updaters = [
-  {
-    actionType: "eosio.token::transfer", // account::name
-    apply: updateTransferData,
-  },
-]
-
+const updaters = [{
+  actionType: 'eosio.token::transfer', // account_name::action_name
+  apply: updateTransferData
+}];
 
 /* Effects
  * Effect `run` functions are much like Updater `apply` functions, with the following differences:
@@ -67,18 +54,10 @@ const updaters = [
  *
  * In this example, we're utilizing it very simply to output the current running token transfer totals to the console.
  */
-
-function logUpdate(payload, blockInfo, context) {
-  debug("State updated:\n %O", context.stateCopy)
-}
-
-const effects = [
-  {
-    actionType: "eosio.token::transfer",
-    run: logUpdate,
-  },
-]
-
+const effects = [{
+  actionType: 'eosio.token::transfer',
+  run: logUpdate
+}];
 
 /*
  * Handler Versions
@@ -91,11 +70,10 @@ const effects = [
  *
  * Since this is a simple example, we will only be using a single Handler Version, "v1".
  */
-
-const handlerVersion = {
-  versionName: "v1",
+const handler = {
+  versionName: 'v1',
   updaters,
-  effects,
-}
+  effects
+};
 
-module.exports = handlerVersion
+module.exports = handler;
