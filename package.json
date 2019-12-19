@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "demux": "^4.0.0",
-    "demux-eos": "^4.0.1",
+    "demux": "5.0.2-572",
+    "demux-eos": "5.0.4-422",
     "express": "^4.17.1"
   }
 }

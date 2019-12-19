@@ -34,10 +34,13 @@ class ObjectActionHandler extends AbstractActionHandler {
 
     debug('=== updateIndexState ===');
     debug('blockCount: %d', stateObj.blockCount);
-    // debug('block: %O', block);
+    debug('blockInfo: %O', block.block.blockInfo);
+    debug('first tracked action: %O', block.block.actions.filter(action => 'eosio.token::transfer' === action.type).slice(0, 1));
+    debug('blockMeta: %O', block.blockMeta);
+    debug('lastIrreversibleBlockNumber: %d', block.lastIrreversibleBlockNumber);
 
-    stateObj.indexState.blockNumber = block.blockInfo.blockNumber;
-    stateObj.indexState.blockHash = block.blockInfo.blockHash;
+    stateObj.indexState.blockNumber = block.block.blockInfo.blockNumber;
+    stateObj.indexState.blockHash = block.block.blockInfo.blockHash;
     stateObj.indexState.isReplay = isReplay;
     stateObj.indexState.handlerVersionName = handlerVersionName;
   }
