@@ -1,7 +1,7 @@
 'use strict';
 
 const { BaseActionWatcher } = require('demux');
-const { StateHistoryPostgresActionReader } = require('demux-eos');
+const { StateHistoryPostgresActionReader } = require('demux-eos/v1.8');
 const ObjectActionHandler = require('./ObjectActionHandler');
 const handler = require('./handlers/v1');
 
@@ -20,7 +20,7 @@ const actionHandler = new ObjectActionHandler([handler], {
  * https://github.com/EOSIO/demux-js-eos
  */
 const actionReader = new StateHistoryPostgresActionReader({
-  startAtBlock: -1,
+  startAtBlock: -1, // 16839643
   onlyIrreversible: true,
   dbSchema: process.env.BLOCKCHAIN_DB_SCHEMA,
   massiveConfig: {

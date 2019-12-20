@@ -17,7 +17,7 @@ app.listen(8080, async () => {
   debug('Listening on 8080...');
 
   try {
-    startWatcher();
+    await startWatcher();
     debug('Watching blockchain events...');
   } catch (error) {
     debug('Fail to watch %o', error);

@@ -40,7 +40,7 @@ function logUpdate(payload, blockInfo, context) {
  * https://github.com/EOSIO/demux-js/blob/develop/examples/eos-transfers/ObjectActionHandler.js
 */
 const updaters = [{
-  actionType: 'eosio.token::transfer', // account_name::action_name
+  actionType: 'badge.can::createcert', // account_name::action_name
   apply: updateTransferData
 }];
 
@@ -55,7 +55,7 @@ const updaters = [{
  * In this example, we're utilizing it very simply to output the current running token transfer totals to the console.
  */
 const effects = [{
-  actionType: 'eosio.token::transfer',
+  actionType: 'badge.can::createcert',
   run: logUpdate
 }];
 

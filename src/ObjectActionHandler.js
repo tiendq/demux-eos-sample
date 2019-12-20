@@ -18,24 +18,30 @@ let state = {
 };
 
 class ObjectActionHandler extends AbstractActionHandler {
+  // #2
   async handleWithState(handle) {
     debug('=== Pre handleWithState ===');
+    // sync. calls
     await handle(state) // calls updateTransferData, updateIndexState
+
+    // #4
     debug('=== Post handleWithState ===');
   }
 
+  // #1 - call order by watcher
   async loadIndexState() {
     debug('=== loadIndexState ===');
     return state.indexState;
   }
 
+  // #3
   async updateIndexState(stateObj, block, isReplay, handlerVersionName) {
     ++ stateObj.blockCount;
 
     debug('=== updateIndexState ===');
     debug('blockCount: %d', stateObj.blockCount);
     debug('blockInfo: %O', block.block.blockInfo);
-    debug('first tracked action: %O', block.block.actions.filter(action => 'eosio.token::transfer' === action.type).slice(0, 1));
+    debug('first tracked action: %O', block.block.actions.filter(action => 'badge.can::createcert' === action.type).slice(0, 1));
     debug('blockMeta: %O', block.blockMeta);
     debug('lastIrreversibleBlockNumber: %d', block.lastIrreversibleBlockNumber);
 
